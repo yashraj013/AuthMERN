@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import VerifyOtp from './pages/VerifyOtp';
 import './styles/globals.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/verify-otp" element={<VerifyOtp />} />
             <Route 
               path="/dashboard" 
               element={

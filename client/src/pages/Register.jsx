@@ -12,7 +12,7 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { register, error: authError, clearError } = useAuth();
+  const { register, sendVerifyOtp, error: authError, clearError } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -83,21 +83,25 @@ const Register = () => {
     });
 
     if (result.success) {
-      navigate('/dashboard');
+      // Trigger OTP send and navigate to verification page
+      if (result.userId) {
+        await sendVerifyOtp(result.userId);
+      }
+      navigate('/verify-otp', { state: { userId: result.userId, email: formData.useremail } });
     }
     
     setIsSubmitting(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen flex items-center justify-center auth-bg">
       <div className="w-full max-w-md">
         <div className="card">
           <div className="card-header text-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-2xl font-bold mb-2">
               Create Account
             </h1>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600">
               Join us today and get started
             </p>
           </div>

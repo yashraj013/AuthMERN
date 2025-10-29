@@ -2,6 +2,7 @@ import nodemailer from "nodemailer"
 
 console.log("SMTP_USER:", process.env.SMTP_USER);
 console.log("SMTP_PASSWORD exists?", !!process.env.SMTP_PASSWORD);
+console.log("SENDER_EMAIL:", process.env.SENDER_EMAIL);
 
 // add SMTP details from brevo
 const transporter = nodemailer.createTransport({

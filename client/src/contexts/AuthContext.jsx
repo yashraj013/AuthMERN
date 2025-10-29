@@ -48,13 +48,47 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post('/api/auth/register', userData);
       
       if (response.data.success) {
-        setUser({ isAuthenticated: true });
-        return { success: true };
+        // Do not authenticate yet; require email verification
+        return { success: true, userId: response.data.userId };
       } else {
         throw new Error(response.data.message || 'Registration failed');
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || error.message || 'Registration failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const sendVerifyOtp = async (userId) => {
+    try {
+      setError(null);
+      const response = await axios.post('/api/auth/send-verify-otp', { userId });
+      if (response.data.success) {
+        return { success: true };
+      }
+      return { success: false, error: response.data.message || 'Failed to send OTP' };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to send OTP';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
+    }
+  };
+
+  const verifyAccount = async (userId, otp) => {
+    try {
+      setError(null);
+      setLoading(true);
+      const response = await axios.post('/api/auth/verify-account', { userId, otp });
+      if (response.data.success) {
+        setUser({ isAuthenticated: true });
+        return { success: true };
+      }
+      return { success: false, error: response.data.message || 'Verification failed' };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message || 'Verification failed';
       setError(errorMessage);
       return { success: false, error: errorMessage };
     } finally {
@@ -105,6 +139,8 @@ export const AuthProvider = ({ children }) => {
     loading,
     error,
     register,
+    sendVerifyOtp,
+    verifyAccount,
     login,
     logout,
     clearError,

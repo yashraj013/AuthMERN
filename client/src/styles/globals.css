@@ -44,6 +44,45 @@
   min-height: 100vh;
 }
 
+/* Width helpers */
+.max-w-md {
+  max-width: 28rem; /* 448px */
+}
+
+/* Spacing helpers */
+.mb-2 {
+  margin-bottom: var(--space-sm);
+}
+.mt-1 {
+  margin-top: var(--space-xs);
+}
+.mr-2 {
+  margin-right: var(--space-sm);
+}
+
+/* Typography helpers */
+.text-sm {
+  font-size: 0.875rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.font-bold {
+  font-weight: 700;
+}
+.text-gray-600 {
+  color: #475569;
+}
+.text-gray-400 {
+  color: #94a3b8;
+}
+
+/* Simple pleasant gradient background for auth pages */
+.auth-bg {
+  background-image: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #e2e8f0 100%);
+}
+
 /* Form styles */
 .form-group {
   margin-bottom: var(--space-lg);
